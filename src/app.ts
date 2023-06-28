@@ -6,7 +6,7 @@ import orderRouter from './routers/orders.routes';
 const app = express();
 
 app.use(express.json());
-app.use('/users', usersRouter);
+app.use('/login', usersRouter);
 app.use('/products', productsRouter);
 app.use('/orders', orderRouter);
 
