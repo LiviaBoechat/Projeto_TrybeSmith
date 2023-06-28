@@ -14,6 +14,16 @@ async function create(req: Request, res: Response): Promise<Response> {
   return res.status(201).json(newProduct.data);
 }
 
+async function findAll(_req: Request, res: Response) {
+  const productsList = await productService.findAll();
+
+  if (productsList.status !== 'SUCCESSFUL') {
+    return res.status(mapStatusHTTP(productsList.status)).json(productsList.data);
+  }
+  return res.status(200).json(productsList.data);
+}
+
 export default {
   create,
+  findAll,
 };

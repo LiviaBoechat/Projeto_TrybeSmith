@@ -17,5 +17,16 @@ describe('ProductsService', function () {
     // Assert
     expect(response.data).to.be.deep.equal(productsMock.realDbResponseMock);
   });
+
+  // it('Testa se a rota get /products responde corretamente', async function () {
+  //   // Arrange (mock)
+  //   const paramters = productsMock.reqBodyMock;
+  //   const mockFindAllReturn = productModel.build(productsMock.allProductsMock);
+  //   sinon.stub(productModel, 'findAll').resolves(mockFindAllReturn);
+  //   // Act
+  //   const response = await productService.findAll();
+  //   // Assert
+  //   expect(response.data).to.be.deep.equal(productsMock.allProductsMock);
+  // });
  
 });

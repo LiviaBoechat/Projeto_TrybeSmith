@@ -4,6 +4,7 @@ import sinonChai from 'sinon-chai';
 import { Request, Response } from 'express';
 import productService from '../../../src/services/product.service';
 import productController from '../../../src/controllers/product.controller';
+import { ProductSequelizeModel } from '../../../src/database/models/product.model'
 import productsMock from '../../mocks/productsMock';
 import { Product } from '../../../src/types/Product';
 import { ServiceResponse } from '../../../src/types/ServiceResponse';
@@ -23,17 +24,16 @@ describe('ProductsController', function () {
     sinon.restore();
   });
 
-
   it('Testa se a rota post /products responde corretamente', async function () {
     // Arrange Mock
-    type DBProductReponse = {
+    type DBProductReponseType = {
       id: number;
       name: string
       price: string;
     };
     
     req.body = productsMock.reqBodyMock;
-    const serviceResponse: ServiceResponse<DBProductReponse> = {
+    const serviceResponse: ServiceResponse<DBProductReponseType> = {
       status: 'SUCCESSFUL',
       data: productsMock.realDbResponseMock,
     }
@@ -43,6 +43,28 @@ describe('ProductsController', function () {
     // Assert
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(productsMock.realDbResponseMock);
+  });
+
+  it('Testa se a rota get /products responde corretamente', async function () {
+    // Arrange Mock
+    type DBProductReponseType = {
+      id: number;
+      name: string
+      price: string;
+      orderId: number
+    };
+
+    req.body = productsMock.reqBodyMock;
+    const serviceResponse: ServiceResponse<DBProductReponseType[]> = {
+      status: 'SUCCESSFUL',
+      data: productsMock.allProductsMock,
+    }
+    sinon.stub(productService, 'findAll').resolves(serviceResponse as any);
+    // Act
+    await productController.findAll(req, res);
+    // Assert
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productsMock.allProductsMock);
   });
 
 });
