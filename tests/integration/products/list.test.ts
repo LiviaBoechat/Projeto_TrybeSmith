@@ -12,13 +12,12 @@ describe('GET /products', function () {
   
   // it('Testa se rota post /products funciona', async function () {
   //   // Arrange (mock)
-  //   const httpRequestBody = productsMock.reqBodyMock;
   //   const mockFindAllReturn = productModel.build(productsMock.allProductsMock);
-  //   sinon.stub(productModel, 'findAll').resolves(mockFindAllReturn);
+  //   sinon.stub(productModel, 'findAll').resolves([mockFindAllReturn]);
   //   // Act
-  //   const httpResponse = await chai.request(app).post('/products').send(httpRequestBody);
+  //   const httpResponse = await chai.request(app).post('/products');
   //   // Assert
   //   expect(httpResponse.status).to.equal(201);
-  //   expect(httpResponse.body).to.be.deep.equal(productsMock.realDbResponseMock);
+  //   expect(httpResponse.body).to.be.deep.equal([productsMock.realDbResponseMock]);
   // });
 });
