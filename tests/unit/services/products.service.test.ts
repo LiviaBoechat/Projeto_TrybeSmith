@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import productModel from '../../../src/database/models/product.model';
+import productModel, { ProductSequelizeModel } from '../../../src/database/models/product.model';
 import productService from '../../../src/services/product.service';
 import productsMock from '../../mocks/productsMock';
+import { Product } from '../../../src/types/Product';
 
 describe('ProductsService', function () {
   afterEach(function () { sinon.restore(); });
@@ -18,15 +19,15 @@ describe('ProductsService', function () {
     expect(response.data).to.be.deep.equal(productsMock.realDbResponseMock);
   });
 
-  // it('Testa se a rota get /products responde corretamente', async function () {
-  //   // Arrange (mock)
-  //   const paramters = productsMock.reqBodyMock;
-  //   const mockFindAllReturn = productModel.build(productsMock.allProductsMock);
-  //   sinon.stub(productModel, 'findAll').resolves(mockFindAllReturn);
-  //   // Act
-  //   const response = await productService.findAll();
-  //   // Assert
-  //   expect(response.data).to.be.deep.equal(productsMock.allProductsMock);
-  // });
+  it('Testa se a rota get /products responde corretamente', async function () {
+    // Arrange (mock)
+    const paramters = productsMock.reqBodyMock;
+    const mockFindAllReturn = productModel.build(productsMock.allProductsMock as unknown as Product);
+    sinon.stub(productModel, 'findAll').resolves(productsMock.allProductsMock as unknown as [ProductSequelizeModel]);
+    // Act
+    const response = await productService.findAll();
+    // Assert
+    expect(response.data).to.be.deep.equal(productsMock.allProductsMock);
+  });
  
 });
