@@ -1,5 +1,6 @@
 import { literal } from 'sequelize';
-import OrderModel, { OrderSequelizeModel } from '../database/models/order.model';
+import OrderModel, { OrderInputtableTypes, 
+  OrderSequelizeModel } from '../database/models/order.model';
 import ProductModel from '../database/models/product.model';
 import { ServiceResponse } from '../types/ServiceResponse';
 
@@ -26,6 +27,29 @@ async function findAll(): Promise<ServiceResponse<OrderSequelizeModel[]>> {
   return theServiceResponse;
 }
 
+type DBPOrderReponse = {
+  productIds: number[];
+  userId: number
+};
+
+async function create(order: OrderInputtableTypes)
+  : Promise<ServiceResponse<DBPOrderReponse>> {
+  const newOrder = await OrderModel.create(order);
+  const orderId = newOrder.dataValues.id;
+  const orderId = newOrder.dataValues.id;
+
+  await Promise.all(productIds.map((id) =>
+    ProductModel.update({ orderId }, { where: { id } })));
+  
+  const theServiceResponse: ServiceResponse<DBPOrderReponse | unknown> = {
+    status: 'SUCCESSFUL', 
+    data: { userId, productIds }, 
+  };
+
+  return theServiceResponse;
+}
+
 export default {
   findAll,
+  create,
 };

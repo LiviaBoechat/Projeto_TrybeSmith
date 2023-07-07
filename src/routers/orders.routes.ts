@@ -5,5 +5,6 @@ import ordersController from '../controllers/order.controller';
 const productsRouter = Router();
 
 productsRouter.get('/', ordersController.findAll);
+productsRouter.post('/', ordersController.create);
 
 export default productsRouter;

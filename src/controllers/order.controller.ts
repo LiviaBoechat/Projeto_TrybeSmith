@@ -11,6 +11,19 @@ async function findAll(_req: Request, res: Response) {
   return res.status(200).json(ordersList.data);
 }
 
+async function create(req: Request, res: Response): Promise<Response> {
+  const { productIds, userId } = req.body;
+  const newOrder = await ordersService.create(
+    { productIds, userId },
+  );
+
+  if (newOrder.status !== 'SUCCESSFUL') {
+    return res.status(mapStatusHTTP(newOrder.status)).json(newOrder.data);
+  }
+  return res.status(201).json(newOrder.data);
+}
+
 export default {
   findAll,
+  create,
 };
